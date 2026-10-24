@@ -10,10 +10,15 @@ namespace Bai07
     {
         static void Main(string[] args)
         {
-            //in test trang thai thiet bi
-            Console.WriteLine(DeviceStatus.Available);
-            Console.WriteLine(DeviceStatus.Borrowed);
-            Console.WriteLine(DeviceStatus.UnderMaintenance);
+            //test ngoai le
+            var ex1 = new DuplicateIdException("DEV01");
+            Console.WriteLine(ex1.DuplicateId);
+
+            var ex2 = new NoSuitableItemException();
+            Console.WriteLine(ex2.Message);
+
+            var ex3 = new DeviceNotReadyException("DEV02", DeviceStatus.UnderMaintenance);
+            Console.WriteLine(ex3.DeviceId + " - " + ex3.CurrentStatus);
         }
     }
 }
