@@ -10,7 +10,10 @@ namespace Bai07
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("khoi tao project");
+            //in test trang thai thiet bi
+            Console.WriteLine(DeviceStatus.Available);
+            Console.WriteLine(DeviceStatus.Borrowed);
+            Console.WriteLine(DeviceStatus.UnderMaintenance);
         }
     }
 }
