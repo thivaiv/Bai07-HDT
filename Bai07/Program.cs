@@ -10,15 +10,12 @@ namespace Bai07
     {
         static void Main(string[] args)
         {
-            //test ngoai le
-            var ex1 = new DuplicateIdException("DEV01");
-            Console.WriteLine(ex1.DuplicateId);
+            //test projector remote
+            var p1 = new ProjectorRemote("MC01", "Điều khiển máy chiếu 1", "Phòng thiết bị 1", 85);
+            var p2 = new ProjectorRemote("MC02", "Điều khiển máy chiếu 2", "Phòng thiết bị 1", 15);
 
-            var ex2 = new NoSuitableItemException();
-            Console.WriteLine(ex2.Message);
-
-            var ex3 = new DeviceNotReadyException("DEV02", DeviceStatus.UnderMaintenance);
-            Console.WriteLine(ex3.DeviceId + " - " + ex3.CurrentStatus);
+            Console.WriteLine(p1.Id + " | pin: " + p1.BatteryLevel + " | san sang: " + p1.IsReadyForUse() + " | diem: " + p1.GetDefaultPriorityScore());
+            Console.WriteLine(p2.Id + " | pin: " + p2.BatteryLevel + " | san sang: " + p2.IsReadyForUse() + " | diem: " + p2.GetDefaultPriorityScore());
         }
     }
 }
