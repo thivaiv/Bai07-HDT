@@ -3,7 +3,6 @@
 //họ tên: Chu Đình Thi
 /****************/
 using System;
-using System.Collections.Generic;
 
 namespace Bai07
 {
@@ -11,19 +10,16 @@ namespace Bai07
     {
         static void Main(string[] args)
         {
-            //test strategy
-            var list = new List<ProjectorRemote>
-            {
-                new ProjectorRemote("MC01", "Máy chiếu 1", "Kho 1", 50),
-                new ProjectorRemote("MC02", "Máy chiếu 2", "Kho 1", 90),
-                new ProjectorRemote("MC03", "Máy chiếu 3", "Kho 1", 70)
-            };
+            //test allocation service
+            var repo = new InMemoryRepository<ProjectorRemote>();
+            repo.Add(new ProjectorRemote("MC01", "Máy chiếu 1", "Kho 1", 50));
+            repo.Add(new ProjectorRemote("MC02", "Máy chiếu 2", "Kho 1", 90));
 
-            var firstStrategy = new FirstAvailableStrategy<ProjectorRemote>();
-            var bestStrategy = new HighestPriorityStrategy<ProjectorRemote>(d => d.GetDefaultPriorityScore());
+            var strategy = new HighestPriorityStrategy<ProjectorRemote>(d => d.GetDefaultPriorityScore());
+            var service = new AllocationService<ProjectorRemote>(repo, strategy);
 
-            Console.WriteLine("first: " + firstStrategy.Select(list).Id);
-            Console.WriteLine("highest: " + bestStrategy.Select(list).Id);
+            var allocated = service.Allocate();
+            Console.WriteLine("cap phat: " + allocated.Id + " | trang thai: " + allocated.Status);
         }
     }
 }
