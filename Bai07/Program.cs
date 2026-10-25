@@ -10,14 +10,23 @@ namespace Bai07
     {
         static void Main(string[] args)
         {
-            //test wireless microphone
-            var m1 = new WirelessMicrophone("MIC01", "Micro 1", "Phòng thiết bị 3", 80, 90);
-            var m2 = new WirelessMicrophone("MIC02", "Micro 2", "Phòng thiết bị 3", 20, 80);
-            var m3 = new WirelessMicrophone("MIC03", "Micro 3", "Phòng thiết bị 3", 80, 30);
+            //test repo
+            var repo = new InMemoryRepository<ProjectorRemote>();
+            repo.Add(new ProjectorRemote("MC01", "Máy chiếu 1", "Kho 1", 90));
+            repo.Add(new ProjectorRemote("MC02", "Máy chiếu 2", "Kho 1", 10));
 
-            Console.WriteLine(m1.Id + " | san sang: " + m1.IsReadyForUse() + " | diem: " + m1.GetDefaultPriorityScore());
-            Console.WriteLine(m2.Id + " | san sang: " + m2.IsReadyForUse() + " | diem: " + m2.GetDefaultPriorityScore());
-            Console.WriteLine(m3.Id + " | san sang: " + m3.IsReadyForUse() + " | diem: " + m3.GetDefaultPriorityScore());
+            Console.WriteLine("so luong: " + repo.GetAll().Count);
+            Console.WriteLine("tim MC01: " + (repo.FindById("MC01") != null));
+            Console.WriteLine("tim MC99: " + (repo.FindById("MC99") != null));
+
+            try
+            {
+                repo.Add(new ProjectorRemote("MC01", "Trùng", "Kho 1", 50));
+            }
+            catch (DuplicateIdException ex)
+            {
+                Console.WriteLine("loi: " + ex.DuplicateId);
+            }
         }
     }
 }
