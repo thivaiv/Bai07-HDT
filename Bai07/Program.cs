@@ -3,6 +3,7 @@
 //họ tên: Chu Đình Thi
 /****************/
 using System;
+using System.Collections.Generic;
 
 namespace Bai07
 {
@@ -10,23 +11,19 @@ namespace Bai07
     {
         static void Main(string[] args)
         {
-            //test repo
-            var repo = new InMemoryRepository<ProjectorRemote>();
-            repo.Add(new ProjectorRemote("MC01", "Máy chiếu 1", "Kho 1", 90));
-            repo.Add(new ProjectorRemote("MC02", "Máy chiếu 2", "Kho 1", 10));
-
-            Console.WriteLine("so luong: " + repo.GetAll().Count);
-            Console.WriteLine("tim MC01: " + (repo.FindById("MC01") != null));
-            Console.WriteLine("tim MC99: " + (repo.FindById("MC99") != null));
-
-            try
+            //test strategy
+            var list = new List<ProjectorRemote>
             {
-                repo.Add(new ProjectorRemote("MC01", "Trùng", "Kho 1", 50));
-            }
-            catch (DuplicateIdException ex)
-            {
-                Console.WriteLine("loi: " + ex.DuplicateId);
-            }
+                new ProjectorRemote("MC01", "Máy chiếu 1", "Kho 1", 50),
+                new ProjectorRemote("MC02", "Máy chiếu 2", "Kho 1", 90),
+                new ProjectorRemote("MC03", "Máy chiếu 3", "Kho 1", 70)
+            };
+
+            var firstStrategy = new FirstAvailableStrategy<ProjectorRemote>();
+            var bestStrategy = new HighestPriorityStrategy<ProjectorRemote>(d => d.GetDefaultPriorityScore());
+
+            Console.WriteLine("first: " + firstStrategy.Select(list).Id);
+            Console.WriteLine("highest: " + bestStrategy.Select(list).Id);
         }
     }
 }
